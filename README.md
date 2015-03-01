@@ -20,6 +20,10 @@ see the [CONTRIBUTING.md] file.
 [hound@thoughtbot.com]: mailto:hound@thoughtbot.com
 [CONTRIBUTING.md]: CONTRIBUTING.md
 
+## Upcoming features
+
+- Support for commit, instead of just pull requests
+
 ## License
 
 The names and logos for Hound are trademarks of thoughtbot, inc.
