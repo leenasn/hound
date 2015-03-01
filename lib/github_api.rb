@@ -42,7 +42,7 @@ class GithubApi
       full_repo_name,
       "web",
       { url: callback_endpoint },
-      { events: ["pull_request"], active: true }
+      { events: ["pull_request","push"], active: true }
     )
 
     if block_given?
