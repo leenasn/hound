@@ -4,7 +4,8 @@ class BuildRunner
   pattr_initialize :payload
 
   def run
-    if repo && relevant_pull_request?
+    #if repo && relevant_pull_request?
+    if repo 
       track_subscribed_build_started
       create_pending_status
       repo.builds.create!(
