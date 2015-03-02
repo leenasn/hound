@@ -1,6 +1,6 @@
 class LargeBuildJob < ActiveJob::Base
-  extend Retryable
   include Buildable
+  extend Retryable
 
   queue_as :low
 end
