@@ -5,7 +5,8 @@ class BuildRunner
 
   def run
     #if repo && relevant_pull_request?
-    if repo 
+    if repo
+      logger.debug "BuildRunner.run start"
       track_subscribed_build_started
       create_pending_status
       repo.builds.create!(
@@ -17,6 +18,7 @@ class BuildRunner
       create_success_status
       upsert_owner
       track_subscribed_build_completed
+      logger.debug "BuildRunner.run end"
     end
   end
 
