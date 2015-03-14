@@ -38,11 +38,12 @@ class GithubApi
   end
 
   def create_hook(full_repo_name, callback_endpoint)
+    Rails.log.debug "creating hook #{full_repo_name}"
     hook = client.create_hook(
       full_repo_name,
       "web",
       { url: callback_endpoint },
-      { events: ["pull_request","push"], active: true }
+      { events: ["pull_request","push"], active: true}
     )
 
     if block_given?
