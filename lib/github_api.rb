@@ -76,6 +76,11 @@ class GithubApi
     client.pull_request_files(full_repo_name, number)
   end
 
+  def commit_files(full_repo_name, sha)
+    client.commit(full_repo_name, sha).files
+  end
+
+
   def file_contents(full_repo_name, filename, sha)
     file_cache["#{full_repo_name}/#{sha}/#{filename}"] ||=
       client.contents(full_repo_name, path: filename, ref: sha)
@@ -191,6 +196,7 @@ class GithubApi
   end
 
   def create_status(repo:, sha:, state:, description:)
+    Rails.logger.debug "creating status for #{sha}"
     client.create_status(
       repo,
       sha,
