@@ -37,13 +37,25 @@ class GithubApi
     )
   end
 
+  def add_comment(options)
+    client.create_commit_comment(
+      options[:commit].repo_name,
+      options[:commit].sha,
+      options[:comment],
+      options[:filename],
+      options[:line_number],
+      options[:patch_position]
+    )
+  end
+
+
   def create_hook(full_repo_name, callback_endpoint)
     Rails.log.debug "creating hook #{full_repo_name}"
     hook = client.create_hook(
       full_repo_name,
       "web",
       { url: callback_endpoint },
-      { events: ["pull_request","push"], active: true}
+      { events: ["pull_request", "push"], active: true}
     )
 
     if block_given?
@@ -197,7 +209,6 @@ class GithubApi
   end
 
   def create_status(repo:, sha:, state:, description:)
-    Rails.logger.debug "creating status for #{sha}"
     client.create_status(
       repo,
       sha,
@@ -205,7 +216,7 @@ class GithubApi
       context: "hound",
       description: description
     )
-  rescue Octokit::NotFound
-    # noop
+    rescue Octokit::NotFound
+      # noop
   end
 end

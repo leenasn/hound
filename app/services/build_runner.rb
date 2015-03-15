@@ -2,12 +2,11 @@ class BuildRunner
   MAX_COMMENTS = ENV.fetch("MAX_COMMENTS").to_i
 
   pattr_initialize :payload
-
+  
   def run
     #if repo && relevant_pull_request?
     if repo
-      logger.debug "BuildRunner.run start"
-      track_subscribed_build_started
+      #track_subscribed_build_started
       create_pending_status
       repo.builds.create!(
         violations: violations,
@@ -17,8 +16,7 @@ class BuildRunner
       commenter.comment_on_violations(priority_violations)
       create_success_status
       upsert_owner
-      track_subscribed_build_completed
-      logger.debug "BuildRunner.run end"
+      #track_subscribed_build_completed
     end
   end
 
@@ -87,9 +85,12 @@ class BuildRunner
 
   def upsert_owner
     Owner.upsert(
-      github_id: payload.repository_owner_id,
-      name: payload.repository_owner_name,
-      organization: payload.repository_owner_is_organization?
+      #github_id: payload.repository_owner_id,
+      #name: payload.repository_owner_name,
+      #organization: payload.repository_owner_is_organization?
+      github_id: payload.github_repo_id,
+      name: "multunus#{Time.now.to_i}",
+      organization: true
     )
   end
 

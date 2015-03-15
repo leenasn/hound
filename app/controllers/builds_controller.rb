@@ -6,12 +6,19 @@ class BuildsController < ApplicationController
   def create
     #if payload.pull_request?
       build_job_class.perform_later(payload.data)
+      #perform_build(payload.data)
     #end
     head :ok
   end
 
   private
 
+  def perform_build payload_data
+    payload = Payload.new(payload_data)
+    build_runner = BuildRunner.new(payload)
+    build_runner.run
+  end
+  
   def force_https?
     false
   end

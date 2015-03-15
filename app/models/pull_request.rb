@@ -6,19 +6,30 @@ class PullRequest
   end
 
   def pull_request_files
+    #@pull_request_files ||= api.
+    #  pull_request_files(full_repo_name, number).
+    #  map { |file| build_commit_file(file) }
     @pull_request_files ||= api.
-      pull_request_files(full_repo_name, number).
-      map { |file| build_commit_file(file) }
+      commit_files(full_repo_name, payload.sha).
+      map { |file| 
+        build_commit_file(file) }
   end
 
   def comment_on_violation(violation)
-    api.add_pull_request_comment(
-      pull_request_number: number,
+    #api.add_pull_request_comment(
+    #  pull_request_number: number,
+    #  comment: violation.messages.join("<br>"),
+    #  commit: head_commit,
+    #  filename: violation.filename,
+    #  patch_position: violation.patch_position
+    #)
+    api.add_comment(
       comment: violation.messages.join("<br>"),
-      commit: head_commit,
       filename: violation.filename,
-      patch_position: violation.patch_position
-    )
+      patch_position: violation.patch_position,
+      line_number: violation.line_number,
+      commit: head_commit,
+   )
   end
 
   def repository_owner_name

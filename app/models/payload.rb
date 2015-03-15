@@ -5,8 +5,13 @@ class Payload
     @data ||= parse_data
   end
 
+  def sha
+    data["head_commit"]["id"]
+  end
+
   def head_sha
-    pull_request.fetch("head", {})["sha"]
+    sha
+    #pull_request.fetch("head", {})["sha"] || 
   end
 
   def github_repo_id
@@ -52,6 +57,7 @@ class Payload
   def build_data
     {
       "number" => pull_request_number,
+      "sha" => data["head_commit"]["id"],
       "action" => action,
       "pull_request" => {
         "changed_files" => changed_files,
