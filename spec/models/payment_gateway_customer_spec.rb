@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe PaymentGatewayCustomer do
+  pending
   describe "#update_card" do
     it "updates card" do
       new_card_token = "newcardtoken"

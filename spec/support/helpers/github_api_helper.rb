@@ -444,6 +444,12 @@ module GithubApiHelper
     )
   end
 
+  def stub_commits_request(full_repo_name)
+    stub_request(:get, "https://api.github.com/repos/#{full_repo_name}/commits/").
+      with(:headers => {'Accept'=>'application/vnd.github.v3+json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Authorization'=>'token houndgithubtoken', 'Content-Type'=>'application/json', 'User-Agent'=>'Octokit Ruby Gem 3.8.0'}).
+      to_return(:status => 200, :body => "", :headers => {})
+  end
+
   def hound_token
     ENV["HOUND_GITHUB_TOKEN"]
   end

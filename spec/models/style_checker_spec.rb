@@ -6,9 +6,10 @@ describe StyleChecker, "#violations" do
     violated_file = stub_commit_file("bad.rb", "def bad( a ); a; end  ")
     pull_request =
       stub_pull_request(pull_request_files: [stylish_file, violated_file])
-    expected_violations = ["Unnecessary spacing detected.",
-                           "Space inside parentheses detected.",
-                           "Trailing whitespace detected."]
+    expected_violations = ["C:  1: 21: Unnecessary spacing detected.", 
+                           "C:  1:  9: Space inside parentheses detected.", 
+                           "C:  1: 11: Space inside parentheses detected.", 
+                           "C:  1: 21: Trailing whitespace detected."]
 
     violation_messages = StyleChecker.new(pull_request).violations.
       flat_map(&:messages)
@@ -24,8 +25,8 @@ describe StyleChecker, "#violations" do
 
         violations = StyleChecker.new(pull_request).violations
         messages = violations.flat_map(&:messages)
-        expected_violations = ["Unnecessary spacing detected.",
-                               "Trailing whitespace detected."]
+        expected_violations = ["C:  1:  9: Unnecessary spacing detected.",
+                               "C:  1:  9: Trailing whitespace detected."]
 
         expect(messages).to eq expected_violations
       end

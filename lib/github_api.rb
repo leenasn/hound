@@ -50,7 +50,6 @@ class GithubApi
 
 
   def create_hook(full_repo_name, callback_endpoint)
-    Rails.log.debug "creating hook #{full_repo_name}"
     hook = client.create_hook(
       full_repo_name,
       "web",

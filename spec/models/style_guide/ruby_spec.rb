@@ -60,7 +60,7 @@ end
 
     describe "for is_* method name" do
       it "returns violations" do
-        violations = ["Rename `is_something?` to `something?`."]
+        violations = ["C:  1:  5: Rename `is_something?` to `something?`."]
 
         expect(violations_in(<<-CODE)).to eq violations
 def is_something?
@@ -80,9 +80,9 @@ users.detect(&:active?)
 
     describe "when using find" do
       it "returns violations" do
-        violations = ["Prefer `detect` over `find`."]
+        violations = ["C:  1:  7: Prefer `detect` over `find`."]
 
-        expect(violations_in(<<-CODE)).to eq violations
+        expect(violations_in(<<-CODE)).to match violations
 users.find(&:active?)
         CODE
       end
@@ -98,7 +98,7 @@ users.select(&:active?)
 
     describe "when using find_all" do
       it "returns violations" do
-        violations = ["Prefer `select` over `find_all`."]
+        violations = ["C:  1:  7: Prefer `select` over `find_all`."]
 
         expect(violations_in(<<-CODE)).to eq violations
 users.find_all(&:active?)
@@ -116,7 +116,7 @@ users.map(&:active?)
 
     describe "when using collect" do
       it "returns violations" do
-        violations = ["Prefer `map` over `collect`."]
+        violations = ["C:  1:  7: Prefer `map` over `collect`."]
 
         expect(violations_in(<<-CODE)).to eq violations
 users.collect(&:active?)
@@ -136,7 +136,7 @@ users.collect(&:active?)
 
     describe "when using reduce" do
       it "returns violations" do
-        violations = ["Prefer `inject` over `reduce`."]
+        violations = ["C:  1:  7: Prefer `inject` over `reduce`."]
 
         expect(violations_in(<<-CODE)).to eq violations
 users.reduce(0) do |_, user|
@@ -148,7 +148,7 @@ end
 
     context "for long line" do
       it "returns violation" do
-        violations = ["Line is too long. [81/80]"]
+        violations = ["C:  1: 81: Line is too long. [81/80]"]
 
         expect(violations_in("a" * 81 + "\n")).to eq violations
       end
@@ -156,7 +156,7 @@ end
 
     context "for trailing whitespace" do
       it "returns violation" do
-        violations = ["Trailing whitespace detected."]
+        violations = ["C:  1: 11: Trailing whitespace detected."]
 
         expect(violations_in("[1, 2].sum \n")).to eq violations
       end
@@ -164,7 +164,7 @@ end
 
     context "for spaces after (" do
       it "returns violations" do
-        violations = ["Space inside parentheses detected."]
+        violations = ["C:  1:  8: Space inside parentheses detected."]
 
         expect(violations_in(<<-CODE)).to eq violations
 logger( "test")
@@ -174,7 +174,7 @@ logger( "test")
 
     context "for spaces before )" do
       it "returns violations" do
-        violations = ["Space inside parentheses detected."]
+        violations = ["C:  1: 14: Space inside parentheses detected."]
 
         expect(violations_in(<<-CODE)).to eq violations
 logger("test" )
@@ -184,7 +184,7 @@ logger("test" )
 
     context "for spaces before ]" do
       it "returns violations" do
-        violations = ["Space inside square brackets detected."]
+        violations = ["C:  1:  9: Space inside square brackets detected."]
 
         expect(violations_in(<<-CODE)).to eq violations
 a["test" ]
@@ -194,7 +194,7 @@ a["test" ]
 
     context "for private methods indented more than public methods" do
       it "returns violations" do
-        violations = ["Inconsistent indentation detected."]
+        violations = ["C:  7:  3: Inconsistent indentation detected."]
 
         expect(violations_in(<<-CODE)).to eq violations
 def one
@@ -212,7 +212,7 @@ private
 
     context "for leading dot used for multi-line method chain" do
       it "returns violations" do
-        violations = ["Place the . on the previous line, together with the "\
+        violations = ["C:  2:  3: Place the . on the previous line, together with the "\
                       "method call receiver."]
 
         expect(violations_in(<<-CODE)).to eq violations
@@ -224,7 +224,7 @@ one
 
     context "for tab indentation" do
       it "returns violations" do
-        violations = ["Use 2 (not 1) spaces for indentation.", "Tab detected."]
+        violations = ["C:  2:  1: Use 2 (not 1) spaces for indentation.", "C:  2:  1: Tab detected."]
 
         expect(violations_in(<<-CODE)).to eq violations
 def test
@@ -236,7 +236,7 @@ end
 
     context "for two methods without newline separation" do
       it "returns violations" do
-        violations = ["Use empty lines between defs."]
+        violations = ["C:  4:  1: Use empty lines between defs."]
 
         expect(violations_in(<<-CODE)).to eq violations
 def one
@@ -251,7 +251,7 @@ end
 
     context "for operator without surrounding spaces" do
       it "returns violations" do
-        violations = ["Surrounding space missing for operator '+'."]
+        violations = ["C:  1:  2: Surrounding space missing for operator '+'."]
         expect(violations_in(<<-CODE)).to eq violations
 1+1
         CODE
@@ -260,7 +260,7 @@ end
 
     context "for comma without trailing space" do
       it "returns violations" do
-        violations = ["Space missing after comma."]
+        violations = ["C:  1: 12: Space missing after comma."]
 
         expect(violations_in(<<-CODE)).to eq violations
 logger :one,:two
@@ -270,9 +270,9 @@ logger :one,:two
 
     context "for colon without trailing space" do
       it "returns violations" do
-        violations = ["Space missing after colon.",
-                      "Space inside { missing.",
-                      "Space inside } missing."]
+        violations = ["C:  1:  5: Space missing after colon.",
+                      "C:  1:  1: Space inside { missing.",
+                      "C:  1:  7: Space inside } missing."]
 
         expect(violations_in(<<-CODE)).to eq violations
 {one:1}
@@ -282,8 +282,8 @@ logger :one,:two
 
     context "for semicolon without trailing space" do
       it "returns violations" do
-        violations = ["Do not use semicolons to terminate expressions.",
-                      "Space missing after semicolon."]
+        violations = ["C:  1: 12: Do not use semicolons to terminate expressions.",
+                      "C:  1: 12: Space missing after semicolon."]
 
         expect(violations_in(<<-CODE)).to eq violations
 logger :one;logger :two
@@ -293,7 +293,7 @@ logger :one;logger :two
 
     context "for opening brace without leading space" do
       it "returns violations" do
-        violations = ["Surrounding space missing for operator '='."]
+        violations = ["C:  1:  3: Surrounding space missing for operator '='."]
 
         expect(violations_in(<<-CODE)).to eq violations
 a ={ one: 1 }
@@ -304,7 +304,7 @@ a
 
     context "for opening brace without trailing space" do
       it "returns violations" do
-        violations = ["Space inside { missing."]
+        violations = ["C:  1:  5: Space inside { missing."]
 
         expect(violations_in(<<-CODE)).to eq violations
 a = {one: 1 }
@@ -315,7 +315,7 @@ a
 
     context "for closing brace without leading space" do
       it "returns violations" do
-        violations = ["Space inside } missing."]
+        violations = ["C:  1: 13: Space inside } missing."]
 
         expect(violations_in(<<-CODE)).to eq violations
 a = { one: 1}
@@ -344,7 +344,7 @@ end
           CODE
 
           expect(violations_in(code)).to eq [
-            "Align the parameters of a method call if they span more than " +
+            "C:  2:  3: Align the parameters of a method call if they span more than " +
               "one line."
           ]
         end
@@ -391,8 +391,8 @@ end
           violations = violations_in(code)
 
           expect(violations).to eq [
-            "Space found before comma.",
-            "Space inside parentheses detected.",
+            "C:  1: 21: Space found before comma.",
+            "C:  1: 28: Space inside parentheses detected.",
           ]
         end
       end
@@ -409,7 +409,7 @@ end
 
       violations = violations_with_config(config)
 
-      expect(violations).to eq ["Use the new Ruby 1.9 hash syntax."]
+      expect(violations).to eq ["C:  2:  5: Use the new Ruby 1.9 hash syntax."]
     end
 
     it "can use custom configuration to display rubocop cop names" do
@@ -418,7 +418,7 @@ end
       violations = violations_with_config(config)
 
       expect(violations).to eq [
-        "Style/HashSyntax: Use the new Ruby 1.9 hash syntax."
+        "C:  2:  5: Style/HashSyntax: Use the new Ruby 1.9 hash syntax."
       ]
     end
 
@@ -436,7 +436,7 @@ end
         violations = violations_with_config(config)
 
         expect(violations).to eq [
-          "Prefer single-quoted strings when you don't need string "\
+          "C:  2: 13: Prefer single-quoted strings when you don't need string "\
           "interpolation or special symbols."
         ]
       end
@@ -468,7 +468,7 @@ end
         violations = violations_with_config(config)
 
         expect(violations).to eq [
-          "Prefer single-quoted strings when you don't need string "\
+          "C:  2: 13: Prefer single-quoted strings when you don't need string "\
           "interpolation or special symbols."
         ]
       end
@@ -476,7 +476,7 @@ end
 
     context "with using block" do
       it "returns violations" do
-        violations = ["Pass `&:name` as an argument to `map` "\
+        violations = ["C:  1:  1: Pass `&:name` as an argument to `map` "\
                       "instead of a block."]
 
         expect(violations_in(<<-CODE)).to eq violations
@@ -489,7 +489,7 @@ end
 
     context "with calls debugger" do
       it "returns violations" do
-        violations = ["Remove debugger entry point `binding.pry`."]
+        violations = ["W:  1:  1: Remove debugger entry point `binding.pry`."]
 
         expect(violations_in(<<-CODE)).to eq violations
 binding.pry
@@ -499,8 +499,8 @@ binding.pry
 
     context "with empty lines around block" do
       it "returns violations" do
-        violations = ["Extra empty line detected at block body beginning.",
-                      "Extra empty line detected at block body end."]
+        violations = ["C:  2:  1: Extra empty line detected at block body beginning.",
+                      "C:  4:  1: Extra empty line detected at block body end."]
 
         expect(violations_in(<<-CODE)).to eq violations
 block do |hoge|
@@ -514,7 +514,7 @@ end
 
     context "with unnecessary space" do
       it "returns violations" do
-        violations = ["Unnecessary spacing detected."]
+        violations = ["C:  1:  5: Unnecessary spacing detected."]
 
         expect(violations_in(<<-CODE)).to eq violations
 hoge  = "https://github.com/bbatsov/rubocop"
@@ -587,7 +587,7 @@ hoge
 
     describe "when using inject" do
       it "returns violations" do
-        violations = ["Prefer `reduce` over `inject`."]
+        violations = ["C:  1: 17: Prefer `reduce` over `inject`."]
 
         expect(thoughtbot_violations_in(<<-CODE)).to eq violations
           users.inject(0) do |_, user|

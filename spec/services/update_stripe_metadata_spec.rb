@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe UpdateStripeMetadata do
+  pending
   describe "#run" do
     context "updates successfully" do
       it "updates stripe metadata with repo id" do

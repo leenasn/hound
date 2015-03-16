@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe RepoSubscriber do
+  pending
   describe ".subscribe" do
     context "when Stripe customer exists" do
       it "creates a new Stripe subscription and repo subscription" do

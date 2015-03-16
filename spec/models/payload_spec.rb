@@ -42,6 +42,17 @@ describe Payload do
         expect(payload.head_sha).to be_nil
       end
     end
+
+    context "with no pull_request data, with commit data" do
+      it "returns sha" do
+        data = { "head_commit" => { "id" => "abc123" } } 
+
+        payload = Payload.new(data)
+
+        expect(payload.head_sha).to eq "abc123"
+      end
+    end
+
   end
 
   describe '#data' do

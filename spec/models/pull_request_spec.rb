@@ -60,21 +60,29 @@ describe PullRequest do
   describe "#comment_on_violation" do
     it "posts a comment to GitHub for the Hound user" do
       payload = payload_stub
-      github = double(:github_client, add_pull_request_comment: nil)
+      #github = double(:github_client, add_pull_request_comment: nil)
+      github = double(:github_client, add_comment: nil)
       pull_request = pull_request_stub(github, payload)
       violation = violation_stub
       commit = double("Commit")
       allow(Commit).to receive(:new).and_return(commit)
-
       pull_request.comment_on_violation(violation)
 
-      expect(github).to have_received(:add_pull_request_comment).with(
-        pull_request_number: payload.pull_request_number,
+      expect(github).to have_received(:add_comment).with(
         commit: commit,
         comment: violation.messages.first,
         filename: violation.filename,
         patch_position: violation.patch_position,
+        line_number: violation.line_number,
       )
+      #expect(github).to have_received(:add_pull_request_comment).with(
+      #  pull_request_number: payload.pull_request_number,
+      #  commit: commit,
+      #  comment: violation.messages.first,
+      #  filename: violation.filename,
+      #  patch_position: violation.patch_position,
+      #  line_number: violation.line_number,
+      #)
     end
   end
 
@@ -83,6 +91,7 @@ describe PullRequest do
       messages: ["A comment"],
       filename: "test.rb",
       patch_position: 123,
+      line_number: 12,
     }
     double("Violation", defaults.merge(options))
   end

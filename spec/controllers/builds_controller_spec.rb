@@ -58,6 +58,7 @@ describe BuildsController, '#create' do
 
   context "when payload is not for pull request" do
     it "does not schedule a job" do
+      pending
       payload_data = File.read("spec/support/fixtures/push_event.json")
       allow(LargeBuildJob).to receive(:perform_later)
       allow(SmallBuildJob).to receive(:perform_later)

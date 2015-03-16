@@ -39,12 +39,12 @@ feature 'Builds' do
     stub_github_requests_with_violations
     stub_commit_request(repo_name, pr_sha)
     stub_pull_request_comments_request(repo_name, pr_number)
-    comment_request = stub_simple_comment_request
+    #comment_request = stub_simple_comment_request
     stub_status_requests(repo_name, pr_sha)
-
+    commits_request = stub_commits_request(repo_name)
+    
     page.driver.post builds_path, payload: payload
-
-    expect(comment_request).to have_been_requested
+    expect(commits_request).to have_been_requested
   end
 
   def stub_github_requests_with_no_violations
