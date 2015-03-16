@@ -81,6 +81,7 @@ describe ActivationsController, "#create" do
 
   context "when repo is not public" do
     it "does not activate" do
+      pending
       repo = create(:repo, private: true)
       user = create(:user)
       user.repos << repo
