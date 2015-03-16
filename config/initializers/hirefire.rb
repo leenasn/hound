@@ -1,4 +1,9 @@
 HireFire::Resource.configure do |config|
+  
+  config.dyno(:rescue) do
+    HireFire::Macro::Resque.queue
+  end
+ 
   config.dyno(:all_worker) do
     HireFire::Macro::Resque.queue
   end
