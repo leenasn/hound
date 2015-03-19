@@ -7,3 +7,9 @@ development: &default
 test:
   <<: *default
   database: hound_test
+
+production:
+  <<: *default
+  database: hound
+  username: hound
+  password: hound
