@@ -36,6 +36,7 @@ gem "unicorn"
 
 group :staging, :production do
   gem "rails_12factor"
+  gem "shelly-dependencies"
 end
 
 group :development, :test do
