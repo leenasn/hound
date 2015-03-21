@@ -17,3 +17,5 @@ hound:
         - redis
         # - mysql
         # - mongodb
+      processes:
+        - "rake resque:work"
