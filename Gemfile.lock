@@ -359,6 +359,8 @@ DEPENDENCIES
   coffee-rails
   coffeelint
   database_cleaner
+  dotenv
+  dotenv-deployment
   dotenv-rails
   factory_girl_rails
   font-awesome-rails

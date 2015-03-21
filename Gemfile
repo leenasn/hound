@@ -37,6 +37,8 @@ gem "unicorn"
 group :staging, :production do
   gem "rails_12factor"
   gem "shelly-dependencies"
+  gem "dotenv"
+  gem "dotenv-deployment"
 end
 
 group :development, :test do
