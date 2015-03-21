@@ -1,0 +1,19 @@
+hound:
+  ruby_version: 2.2.0
+  environment: production # RAILS_ENV
+  domains:
+    - hound.shellyapp.com
+  servers:
+    app1:
+      size: small
+      thin: 2
+      # delayed_job: 1
+      # sidekiq: 1
+      # clockwork: on
+      # whenever: on
+      # elasticsearch: on
+      databases:
+        - postgresql
+        - redis
+        # - mysql
+        # - mongodb
