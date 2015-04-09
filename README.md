@@ -6,7 +6,7 @@
 This codebase is the Rails app for
 [Hound](http://houndci.com),
 a hosted service
-that reviews GitHub pull requests
+that reviews GitHub pull requests and commits 
 for Ruby, JavaScript, CoffeeScript, and SCSS
 style guide violations.
 
